@@ -1,5 +1,5 @@
-Codeigniter Enhanced Edition Distribution!
-==========================================
+Codeigniter Enhanced Edition!
+=============================
 
 Welcome to the Codeigniter Enhanced Edition - a fully-functional Codeigniter2
 application that you can use as the skeleton for your new applications.
