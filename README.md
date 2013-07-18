@@ -14,7 +14,7 @@ using Codeigniter2.
 
 Download or Clone this project first. Go to downloaded directory.
 
-If you don't have Composer[1] yet, download it following the instructions on
+If you don't have [Composer][1] yet, download it following the instructions on
 http://getcomposer.org/ or just run the following command:
 
     curl -s http://getcomposer.org/installer | php
@@ -30,8 +30,34 @@ Composer will install Codeigniter2 and all its dependencies under the working di
 --------------------------------
 
 Congratulations! You're now ready to use Codeigniter2.
+Create the database and import the tables with the basic.sql & data.sql file in schema directory
 
-2) Getting started with Codeigniter2 Extend Edition
+Edit the files with your preferences (domain, languages, database, authentification):
+
+- config.php
+- database.php
+- thirdparty/ezRbac/config/ez_rbac.php.php
+
+Create a virtualhost setting the document root pointing to /path/of/web directory
+If you want more languages, create more ServerAlias
+
+	<VirtualHost *:80>
+		ServerName mydomain.com
+		ServerAlias www.mydomain.com
+		DocumentRoot /path/to/web
+	</VirtualHost>
+
+
+##Backend user and password
+
+The default user to access to the private zone is:
+
+    user: 		admin@admin.com
+
+    password: 	123456
+
+
+3) Getting started with Codeigniter2 Extend Edition
 ----------------------------------------------------
 
 This distribution is meant to be the starting point for your Codeigniter2
@@ -51,9 +77,9 @@ The Codeigniter2 Enhanced Edition is configured with the following defaults:
 
 It comes pre-configured with the following libraries:
 
-  * EzRbac[2] Role Based Access Control Library
+  * [EzRbac][2] Role Based Access Control Library
 
-  * MY_Model[3] An extension of CodeIgniter's base Model class
+  * [MY_Model][3] An extension of CodeIgniter's base Model class
 
   * Enhanced Controller Library
 
