@@ -1,0 +1,52 @@
+{
+    "name": "emicro/ci-project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roni Saha",
+            "email": "roni@xiidea.net",
+            "homepage": "http://www.helpful-roni.com",
+            "role": "Developer"
+        }
+    ],
+    "type": "project",
+    "description": "Codeigniter's Enhanced Distribution!",
+    "autoload": {
+        "psr-0": {
+            "Emicro\\": ["src/"]
+        }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "ellislab/codeigniter",
+                "version": "2.1-stable",
+                "dist": {
+                    "url": "https://github.com/EllisLab/CodeIgniter/archive/2.1-stable.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "ellislab/codeigniter": "2.1-stable",
+        "twig/twig": "1.*",
+        "swiftmailer/swiftmailer": "v5.0.1",
+        "dompdf/dompdf": "dev-master"
+    },
+
+    "scripts": {
+        "pre-install-cmd": ["Emicro\\Installer\\Manager::preInstall"],
+        "pre-update-cmd": ["Emicro\\Installer\\Manager::preUpdate"],
+        "post-install-cmd": ["Emicro\\Installer\\Manager::postInstall"],
+        "post-update-cmd": ["Emicro\\Installer\\Manager::postUpdate"]
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "ci-app-dir": "src/application",
+        "ci-package-name": "ellislab/codeigniter",
+        "ci-web-dir": "web"
+    }
+}

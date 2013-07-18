@@ -1,0 +1,23 @@
+# Bootstrap
+web/index.php
+
+# Project directories and files
+vendor/*
+src/*/logs/*
+src/*/cache/*
+!src/*/logs/index.html
+!src/*/cache/.htaccess
+web/uploads/*
+web/*/cache/*
+
+# Configuration files
+src/*/config/database.php
+
+# IDE
+.idea
+.nbproject
+
+# OS
+.DS_Store
+Thumbs.db
+
