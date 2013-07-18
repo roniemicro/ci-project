@@ -6,8 +6,8 @@ class Dashboard extends Controller {
 
 	public function index()
 	{
-        $this->render('welcome.html.twig');
-        //$this->load->view('welcome_message');
+        //$this->render('welcome.html.twig');
+        $this->render('welcome_message');
 	}
 }
 

@@ -357,8 +357,6 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-$config['enable_twig'] = true;
-
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

@@ -1,4 +1,5 @@
 <?php
+
 namespace Emicro\Base;
 
 /**
@@ -8,99 +9,139 @@ namespace Emicro\Base;
  * in writing very small amount of code to do general tasks that
  * are needed in an application.
  *
- * @author Md Emran Hasan <phpfour@gmail.com>
- * @author By Roni Kumar Saha <roni@emicrograph.com>
- * @version 1.2
- * @since 2012
+ * @author  Md Emran Hasan <phpfour@gmail.com>
+ * @author  Roni Kumar Saha <roni.cse@gmail.com>
+ * @version 1.4
+ * @since   2012
+ * @URL: https://github.com/ronisaha/MY_Model
  */
+
 class Model extends \CI_Model
 {
-    protected $table=null;
-    protected $primaryKey=null;
+    /**
+     * @var string name of table
+     */
+    protected $table = NULL;
+    /**
+     * @var string the primary key
+     */
+    protected $primaryKey = NULL;
 
+
+    /**
+     * @var array list of fields
+     */
     private $fields = array();
-    private $numRows = null;
-    private $insertId = null;
-    private $affectedRows = null;
-    private $returnArray = true;
-    protected $CI=null;
-    
+    /**
+     * @var int returned number of rows of a query
+     */
+    private $numRows = NULL;
+    /**
+     * @var int|string the id of last inserted data
+     */
+    private $insertId = NULL;
+    /**
+     * @var null
+     */
+    private $affectedRows = NULL;
+    /**
+     * @var bool set the return type of query, return as array if true or return object if false
+     */
+    private $returnArray = TRUE;
+
+
     public function __construct()
     {
         parent::__construct();
-        $this->CI = & get_instance();
-        ($this->table!=null) AND $this->loadTable($this->table,$this->primaryKey);
-	}
-    
-    public function loadTable($table, $primaryKey = 'id')
-    {
-        $this->table = $table;
-        $this->primaryKey = $primaryKey;
-        $this->fields = $this->db->list_fields($table);
+        ($this->table != NULL) AND $this->loadTable($this->table, $this->primaryKey);
     }
 
-    public function findAll($conditions = null, $fields = '*', $order = null, $start = 0, $limit = null)
+    /**
+     * @param string $table
+     * @param string $primaryKey
+     */
+    public function loadTable($table, $primaryKey = 'id')
     {
-        if ($conditions != null)  {
-            if(is_array($conditions)) {
+        $this->table      = $table;
+        $this->primaryKey = $primaryKey;
+        $this->fields     = $this->db->list_fields($table);
+    }
+
+    /**
+     * @param null|string|array $conditions
+     * @param string            $fields
+     * @param null|string|array $order
+     * @param int               $start
+     * @param null|int          $limit
+     *
+     * @return mixed
+     */
+    public function findAll($conditions = NULL, $fields = '*', $order = NULL, $start = 0, $limit = NULL)
+    {
+        if ($conditions != NULL) {
+            if (is_array($conditions)) {
                 $this->db->where($conditions);
             } else {
-                $this->db->where($conditions, null, false);
+                $this->db->where($conditions, NULL, FALSE);
             }
         }
 
-        if ($fields != null)  {
+        if ($fields != NULL) {
             $this->db->select($fields);
         }
 
-        if ($order != null) {
+        if ($order != NULL) {
             $this->order_by($order);
         }
 
-        if ($limit != null)  {
+        if ($limit != NULL) {
             $this->db->limit($limit, $start);
         }
 
         return $this->getResult();
     }
 
-    public function getResult($table_name=null){
-        $table=$table_name==null?$this->table:$table_name;
-        $query = $this->db->get($table);
+
+    /**
+     * Get the query result built
+     * Helpful if you built your own query then just call this function to get the result
+     *
+     * @return mixed(array|object) based on the returnArray value
+     */
+    public function getResult()
+    {
+        $query         = $this->db->get($this->table);
         $this->numRows = $query->num_rows();
         return ($this->returnArray) ? $query->result_array() : $query->result();
     }
 
-    public function order_by($orders=NULL){
-        if ($orders == NULL) {
-            return FALSE;
-        }
-        if(is_array($orders)){   //Multiple order by provided!
-           //check if we got single order by passed as array!!
-           if(isset($orders[1]) && (strtolower($orders[1])=='asc' || strtolower($orders[1])=='desc' || strtolower($orders[1]) == 'random')){
-               $this->db->order_by($orders[0],$orders[1]);
-               return;
-           }
-           foreach($orders as $order){
-               $this->order_by($order);
-           }
-           return;
-        }
-        $this->db->order_by($orders); //its a string just call db order_by
-    }
-
-    public function find($conditions = null, $fields = '*', $order = null)
+    /**
+     * @param null|string|array $conditions
+     * @param string            $fields
+     * @param null|string|array $order
+     *
+     * @return bool
+     */
+    public function find($conditions = NULL, $fields = '*', $order = NULL)
     {
         $data = $this->findAll($conditions, $fields, $order, 0, 1);
 
         if ($data) {
             return $data[0];
-        } else  {
-            return false;
+        } else {
+            return FALSE;
         }
     }
 
-    public function field($conditions = null, $name, $fields = '*', $order = null)
+    /**
+     * @param null   $conditions
+     * @param        $name
+     * @param string $fields
+     * @param null   $order
+     *
+     * @return bool
+     */
+    public function field($conditions = NULL, $name, $fields = '*', $order = NULL)
     {
         $data = $this->findAll($conditions, $fields, $order, 0, 1);
 
@@ -111,101 +152,185 @@ class Model extends \CI_Model
             }
         }
 
-        return false;
+        return FALSE;
     }
 
-    public function findCount($conditions = null)
+    /**
+     * @param null $conditions
+     *
+     * @return bool
+     */
+    public function findCount($conditions = NULL)
     {
-        $data = $this->findAll($conditions, 'COUNT(*) AS count', null, 0, 1);
+        $data = $this->findAll($conditions, 'COUNT(*) AS count', NULL, 0, 1);
 
         if ($data) {
             return $data[0]['count'];
         } else {
-            return false;
+            return FALSE;
         }
     }
 
-    public function insert($data = null)
+    /**
+     * @param null $data
+     *
+     * @return bool|null
+     */
+    public function insert($data = NULL)
     {
-        if ($data == null) {
-            return false;
+        if ($data == NULL) {
+            return FALSE;
         }
 
-        $data['entry_time']=date ( 'Y-m-d H:i:s' );
-        $data['update_time']=$data['entry_time'];
-        $data['entry_by']=$this->CI->session->userdata('user_id');
-        $data['update_by']=$data['entry_by'];
-
         foreach ($data as $key => $value) {
-            if (array_search($key, $this->fields) === false) {
+            if (array_search($key, $this->fields) === FALSE) {
                 unset($data[$key]);
             }
         }
 
         $this->db->insert($this->table, $data);
         $this->insertId = $this->db->insert_id();
-        
+
         return $this->insertId;
     }
 
-    public function update($data = null, $id = null,$where=null)
+    /**
+     * @param null $data
+     * @param null $id
+     * @param null $conditions
+     *
+     * @return bool|null
+     */
+    public function update($data = NULL, $id = NULL, $conditions = NULL)
     {
-        if ($data == null) {
-            return false;
+        $this->affectedRows = NULL;
+
+        if ($id == NULL && $conditions == NULL && $data != NULL) { //THis is an insert operation
+            return $this->insert($data);
         }
 
-        $data['update_time']=date ( 'Y-m-d H:i:s' );
-        $data['update_by']=$this->CI->session->userdata('user_id');
+        if ($data == NULL) {
+            return FALSE;
+        }
 
         foreach ($data as $key => $value) {
-            if (array_search($key, $this->fields) === false) {
+            if (array_search($key, $this->fields) === FALSE) {
                 unset($data[$key]);
             }
         }
 
-        if ($id !== null) {
+        if ($id !== NULL) {
             $this->db->where($this->primaryKey, $id);
             $this->db->update($this->table, $data);
             $this->affectedRows = $this->db->affected_rows();
-            return $id;
-        } elseif($where!=null){
-            $this->db->where($where);
+        } elseif ($conditions != NULL) {
+            $this->db->where($conditions);
             $this->db->update($this->table, $data);
             $this->affectedRows = $this->db->affected_rows();
-            return $id;
-        }else {
-            return $this->insert($data);
         }
+
+        return $id;
     }
 
-    public function remove($id = null,$where=null)
+    /**
+     * @param null $data
+     * @param null $update
+     *
+     * @return bool
+     */
+    public function on_duplicate_update($data = NULL, $update = NULL)
     {
-        if ($id != null){
+        if (is_null($data)) {
+            return FALSE;
+        }
+
+        $sql = $this->_duplicate_insert_sql($this->db->_protect_identifiers($this->table), $data, $update);
+        return $this->db->query($sql);
+    }
+
+    /**
+     * @param      $table
+     * @param      $values
+     * @param null $update
+     *
+     * @return string
+     */
+    private function _duplicate_insert_sql($table, $values, $update = NULL)
+    {
+        $updateStr = array();
+        $keyStr    = array();
+        $valStr    = array();
+
+        foreach ($values as $key => $val) {
+            $keyStr[] = $key;
+            $valStr[] = $this->db->escape($val);
+        }
+
+        if (is_null($update)) {
+            $update = $values;
+        }
+
+        foreach ($update as $key => $val) {
+            $updateStr[] = $key . " = '{$val}'";
+        }
+
+        $sql = "INSERT INTO " . $table . " (" . implode(', ', $keyStr) . ") ";
+        $sql .= "VALUES (" . implode(', ', $valStr) . ") ";
+        $sql .= "ON DUPLICATE KEY UPDATE " . implode(", ", $updateStr);
+
+        return $sql;
+    }
+
+    /**
+     * @param null $id
+     * @param null $conditions
+     *
+     * @return bool
+     */
+    public function remove($id = NULL, $conditions = NULL)
+    {
+        if ($id != NULL) {
             $this->db->where($this->primaryKey, $id);
-        }elseif($where!=null) {
-            $this->db->where($where);
-        }else{
-            return false;
+        } elseif ($conditions != NULL) {
+            $this->db->where($conditions);
+        } else {
+            return FALSE;
         }
         return $this->db->delete($this->table);
     }
 
-    public function remove_in($ids=null,$field=null)
+
+    /**
+     * @param null $values
+     * @param null $field
+     *
+     * @return bool
+     */
+    public function remove_in($values = NULL, $field = NULL)
     {
-        if ($ids === null){
-            return false;
-        }
-        if ($field === null){
-            $field=$this->primaryKey;
+        if ($values === NULL) {
+            return FALSE;
         }
 
-        $this->db->where_in($field, $ids);
+        if ($field === NULL) {
+            $field = $this->primaryKey;
+        }
+
+        $this->db->where_in($field, $values);
+
         return $this->db->delete($this->table);
     }
 
-    public function __call ($method, $args)
+
+    /**
+     * @param $method
+     * @param $args
+     *
+     * @return mixed
+     */
+    public function __call($method, $args)
     {
-        $watch = array('findBy','findAllBy','findFieldBy');
+        $watch = array('findBy', 'findAllBy', 'findFieldBy');
 
         foreach ($watch as $found) {
             if (stristr($method, $found)) {
@@ -215,88 +340,218 @@ class Model extends \CI_Model
         }
     }
 
-    public function findFieldBy($field, $value,$fields='*',$order=null){
-        $arg_list=array();
-        if(is_array($value)){
-            $arg_list=$value;
-            $value=$arg_list[0];
+    /**
+     * Returns a property value based on its name.
+     * Do not call this method. This is a PHP magic method that we override
+     * to allow using the following syntax to read a property or obtain event handlers:
+     * <pre>
+     * $value=$model->propertyName;
+     * </pre>
+     *
+     * @param string $name the property name
+     *
+     * @return mixed the property value
+     * @see __set
+     */
+    public function __get($name)
+    {
+        $getter = 'get' . $name;
+        if (method_exists($this, $getter))
+            return $this->$getter();
+        else if (isset($this->$name))
+            return $this->$name;
+
+        $trace = debug_backtrace();
+        trigger_error(
+            'Undefined property : ' . $name .
+            ' in ' . $trace[0]['file'] .
+            ' on line ' . $trace[0]['line'],
+            E_USER_NOTICE);
+        return NULL;
+    }
+
+
+    /**
+     * @param        $field
+     * @param        $value
+     * @param string $fields
+     * @param null   $order
+     *
+     * @return bool
+     */
+    public function findBy($field, $value, $fields = '*', $order = NULL)
+    {
+        $arg_list = array();
+        if (is_array($value)) {
+            $arg_list = $value;
+            $value    = $arg_list[0];
         }
-        $fields = isset($arg_list[1])?$arg_list[1]:$fields;
-        $order = isset($arg_list[2])?$arg_list[2]:$order;
+        $fields = isset($arg_list[1]) ? $arg_list[1] : $fields;
+        $order  = isset($arg_list[2]) ? $arg_list[2] : $order;
+
         $where = array($field => $value);
+        return $this->find($where, $fields, $order);
+    }
+
+    /**
+     * @param        $field
+     * @param        $value
+     * @param string $fields
+     * @param null   $order
+     * @param int    $start
+     * @param null   $limit
+     *
+     * @return mixed
+     */
+    public function findAllBy($field, $value, $fields = '*', $order = NULL, $start = 0, $limit = NULL)
+    {
+        $arg_list = array();
+        if (is_array($value)) {
+            $arg_list = $value;
+            $value    = $arg_list[0];
+        }
+        $fields = isset($arg_list[1]) ? $arg_list[1] : $fields;
+        $order  = isset($arg_list[2]) ? $arg_list[2] : $order;
+        $start  = isset($arg_list[3]) ? $arg_list[3] : $start;
+        $limit  = isset($arg_list[4]) ? $arg_list[4] : $limit;
+
+        $where = array($field => $value);
+        return $this->findAll($where, $fields, $order, $start, $limit);
+    }
+
+    /**
+     *
+     * @param        $field
+     * @param        $value
+     * @param string $fields
+     * @param null   $order
+     *
+     * @return mixed
+     */
+    public function findFieldBy($field, $value, $fields = '*', $order = NULL)
+    {
+        $arg_list = array();
+        if (is_array($value)) {
+            $arg_list = $value;
+            $value    = $arg_list[0];
+        }
+        $fields = isset($arg_list[1]) ? $arg_list[1] : $fields;
+        $order  = isset($arg_list[2]) ? $arg_list[2] : $order;
+        $where  = array($field => $value);
         return $this->field($where, $fields, $fields, $order);
     }
 
-    public function findBy($field, $value,$fields='*',$order=null)
+    /**
+     * call the ci->db->order_by method as per provided param
+     * The param can be string just like default order_by function expect
+     * or can be array with set of param!!
+     * <pre>
+     * $model->orderby('fieldname DESC');
+     * or
+     * $model->orderby(array('fieldname','DESC'));
+     * or
+     * $model->orderby(array(array('fieldname','DESC'),'fieldname DESC'));
+     * </pre>
+     *
+     * @param mixed(string|array) $orders
+     *
+     * @return bool
+     */
+    public function order_by($orders = NULL)
     {
-        $arg_list=array();
-        if(is_array($value)){
-            $arg_list=$value;
-            $value=$arg_list[0];
+        if ($orders == NULL) {
+            return FALSE;
         }
-        $fields = isset($arg_list[1])?$arg_list[1]:$fields;
-        $order = isset($arg_list[2])?$arg_list[2]:$order;
 
-        $where = array($field => $value);
-        return $this->find($where,$fields,$order);
+        if (is_array($orders)) { //Multiple order by provided!
+            //check if we got single order by passed as array!!
+            if (isset($orders[1]) && (strtolower($orders[1]) == 'asc' || strtolower($orders[1]) == 'desc' || strtolower($orders[1]) == 'random')) {
+                $this->db->order_by($orders[0], $orders[1]);
+                return;
+            }
+            foreach ($orders as $order) {
+                $this->order_by($order);
+            }
+            return;
+        }
+
+        $this->db->order_by($orders); //its a string just call db order_by
+
+        return TRUE;
     }
 
-    public function findAllBy($field, $value, $fields='*',$order=null,$start=0,$limit=null)
-    {
-        $arg_list=array();
-        if(is_array($value)){
-            $arg_list=$value;
-            $value=$arg_list[0];
-        }
-        $fields = isset($arg_list[1])?$arg_list[1]:$fields;
-        $order = isset($arg_list[2])?$arg_list[2]:$order;
-        $start = isset($arg_list[3])?$arg_list[3]:$start;
-        $limit = isset($arg_list[4])?$arg_list[4]:$limit;
 
-        $where = array($field => $value);
-        return $this->findAll($where,$fields,$order,$start,$limit);
-    }
-
+    /**
+     * @param $sql
+     *
+     * @return mixed
+     */
     public function executeQuery($sql)
     {
         return $this->db->query($sql);
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastQuery()
     {
         return $this->db->last_query();
     }
 
+    /**
+     * @param $data
+     *
+     * @return mixed
+     */
     public function getInsertString($data)
     {
         return $this->db->insert_string($this->table, $data);
     }
 
+    /**
+     * @return array
+     */
     public function getFields()
     {
         return $this->fields;
     }
 
+    /**
+     * @return null
+     */
     public function getNumRows()
     {
         return $this->numRows;
     }
 
+    /**
+     * @return null
+     */
     public function getInsertId()
     {
         return $this->insertId;
     }
 
+    /**
+     * @return null
+     */
     public function getAffectedRows()
     {
         return $this->affectedRows;
     }
-    
+
+    /**
+     * @param $primaryKey
+     */
     public function setPrimaryKey($primaryKey)
     {
         $this->primaryKey = $primaryKey;
     }
 
+    /**
+     * @param $returnArray
+     */
     public function setReturnArray($returnArray)
     {
         $this->returnArray = $returnArray;
