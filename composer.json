@@ -27,6 +27,21 @@
                     "type": "zip"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "xiidea/ezRbac",
+                "version": "dev-stable",
+                "type": "codeigniter-third-party",
+                "require": {
+                    "composer/installers": "~1.0"
+                },
+                "dist": {
+                    "url": "https://github.com/xiidea/ezRbac/archive/dev-stable.zip",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "require": {
@@ -34,7 +49,8 @@
         "ellislab/codeigniter": "2.1-stable",
         "twig/twig": "1.*",
         "swiftmailer/swiftmailer": "v5.0.1",
-        "dompdf/dompdf": "dev-master"
+        "dompdf/dompdf": "dev-master",
+        "xiidea/ezRbac": "dev-stable"
     },
 
     "scripts": {
@@ -47,6 +63,9 @@
     "extra": {
         "ci-app-dir": "src/application",
         "ci-package-name": "ellislab/codeigniter",
-        "ci-web-dir": "web"
+        "ci-web-dir": "web",
+        "installer-paths": {
+            "CI_THIRD_PARTY_PATH": ["xiidea/ezRbac"]
+        }
     }
 }

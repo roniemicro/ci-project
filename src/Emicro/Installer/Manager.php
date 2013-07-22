@@ -61,8 +61,22 @@ class Manager
             }
         }
 
+        $package->setExtra(self::getExtras($event));
+
         $package->setRequires($requiresList);
     }
+
+    private static function getExtras(Event $event)
+    {
+        $extras = $event->getComposer()->getPackage()->getExtra();
+
+        $thirdPartyDir = $extras['ci-app-dir'].'/third_party/{$name}';
+        $extras['installer-paths'][$thirdPartyDir]= $extras['installer-paths']['CI_THIRD_PARTY_PATH'];
+        unset($extras['installer-paths']['CI_THIRD_PARTY_PATH']);
+
+        return $extras;
+    }
+
     private static function isInstalled($link)
     {
         return file_exists("vendor/".$link->getTarget());

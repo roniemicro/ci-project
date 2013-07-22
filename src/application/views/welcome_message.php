@@ -58,18 +58,22 @@
 	}
 	</style>
 
-	<h1>Welcome to CodeIgniter! <?php __t('View Results', 'site'); ?></h1>
+	<h1><?php __t('Welcome to CodeIgniter!', 'site'); ?>
+        <?php echo anchor($this->ezuri->logout(),'log out','style="float:right;font-size:12px"'); ?>
+    </h1>
 
 	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+		<p><?php __t('The page you are looking at is being generated dynamically by CodeIgniter.', 'site'); ?></p>
 
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
+		<p><?php __t('If you would like to edit this page you\'ll find it located at:', 'site') ?></p>
+		<code>{application directory}/views/welcome_message.php</code>
 
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/welcome.php</code>
+		<p><?php __t('The corresponding controller for this page is found at:', 'site'); ?></p>
+		<code>{application directory}/controllers/welcome.php</code>
 
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+		<p><?php __t('If you are exploring CodeIgniter for the very first time, you should start by reading the', 'site'); ?>
+            <a href="http://ellislab.com/codeigniter/user-guide/‎">User Guide</a>.</p>
 	</div>
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
+	<p class="footer"><?php __t('Page rendered in', 'site'); ?> <strong>{elapsed_time}</strong>
+        <?php __t('seconds', 'site'); ?></p>

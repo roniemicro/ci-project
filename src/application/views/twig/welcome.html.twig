@@ -64,18 +64,20 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Welcome to CodeIgniter! {{ _t('View Results', 'site') }}</h1>
+    <h1>{{ _t('Welcome to CodeIgniter!', 'site') }}</h1>
 
     <div id="body">
-        <p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+        <p>{{ _t('The page you are looking at is being generated dynamically by CodeIgniter.', 'site') }}</p>
 
-        <p>If you would like to edit this page you'll find it located at:</p>
+        <p>{{ _t('If you would like to edit this page you\'ll find it located at:', 'site') }}</p>
         <code>application/views/welcome_message.php</code>
 
-        <p>The corresponding controller for this page is found at:</p>
+        <p>{{ _t('The corresponding controller for this page is found at:', 'site') }}</p>
         <code>application/controllers/welcome.php</code>
 
-        <p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+        <p>{{  _t('If you are exploring CodeIgniter for the very first time, you should start by reading the', 'site') }}
+            <a href="http://ellislab.com/codeigniter/user-guide/‎">User Guide</a>.</p>
+
     </div>
 
     <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
