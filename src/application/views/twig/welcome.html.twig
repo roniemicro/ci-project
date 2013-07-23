@@ -64,10 +64,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ _t('Welcome to CodeIgniter!', 'site') }}</h1>
+    <h1>{{ 'Welcome to CodeIgniter!'|localize('site') }}</h1>
 
     <div id="body">
-        <p>{{ _t('The page you are looking at is being generated dynamically by CodeIgniter.', 'site') }}</p>
+        <p>{{ 'The page you are looking at is being generated dynamically by CodeIgniter.'|localize('site') }}</p>
 
         <p>{{ _t('If you would like to edit this page you\'ll find it located at:', 'site') }}</p>
         <code>application/views/welcome_message.php</code>
