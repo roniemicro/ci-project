@@ -47,6 +47,8 @@ class Manager
         $requiresList = $package->getRequires();
         $io = $event->getIO();
 
+        $package->setExtra(self::getExtras($event));
+
         foreach (self::$requires as $require=>$label){
             $installStatus = self::isInstalled($requiresList[$require]);
             $installStatusStr = $installStatus ? 'yes':'no';
@@ -61,9 +63,24 @@ class Manager
             }
         }
 
-        $package->setExtra(self::getExtras($event));
+        $extras = $package->getExtra();
+
+        foreach($extras['installer-paths'] as $path=>$packs){
+            foreach($packs as $name){
+                if(isset($requiresList[strtolower($name)]) && self::isInstalledPackage($path, $name)){
+                    unset($requiresList[strtolower($name)]);
+                }
+            }
+        }
 
         $package->setRequires($requiresList);
+    }
+
+    private static function isInstalledPackage($path, $package)
+    {
+        list($vendor,$name)=explode('/',$package);
+        $path = str_replace(array('{$name}','{$vendor}'),array($name, $vendor),$path);
+        return file_exists($path);
     }
 
     private static function getExtras(Event $event)
