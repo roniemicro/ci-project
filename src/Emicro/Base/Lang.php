@@ -16,10 +16,12 @@ class Lang extends \CI_Lang {
     protected $special = array ();
 
     // where to redirect if no language in URI
-    protected $uri;
     protected $default_uri;
+
+    protected $uri;
     protected $lang_code;
 
+    private $default_domain= 'site';
 
     /**************************************************/
 
@@ -181,11 +183,11 @@ class Lang extends \CI_Lang {
     function load($langfile = '', $idiom = '', $return = FALSE, $add_suffix = TRUE, $alt_path = '')
     {
         $ret = $this->load_text_domain($langfile, $idiom);
-        if($ret == false){
-            return parent::load($langfile, $idiom, $return, $add_suffix, $alt_path);
-        }
+        //if($ret == false){
+            $ret2 = parent::load($langfile, $idiom, $return, $add_suffix, $alt_path);
+       // }
 
-        return $ret;
+        return $ret || $ret2;
     }
 
     // --------------------------------------------------------------------
@@ -193,23 +195,22 @@ class Lang extends \CI_Lang {
     /**
      * Fetch a single line of text from the language array
      *
-     * @access	public
-     * @param	string	$line	the language line
-     * @return	string
+     * @access    public
+     *
+     * @param    string $line    the language line
+     * @param bool      $domain
+     *
+     * @return    string
      */
     function line($line = '', $domain = false)
     {
         if($domain == false){
-            $value = ($line == '' OR ! isset($this->language[$line])) ? FALSE : $this->language[$line];
+            $value = ($line == '' OR ! isset($this->language[$line]))
+                     ? $this->translate($line, $this->default_domain)
+                     : $this->language[$line];
         }else{
             $value = $this->translate($line, $domain);
         }
-
-        // Because killer robots like unicorns!
-       /* if ($value === FALSE)
-        {
-            log_message('error', 'Could not find the language line "'.$line.'"');
-        }*/
 
         return $value;
     }
@@ -237,20 +238,19 @@ class Lang extends \CI_Lang {
 
     }
 
-    function translate( $text, $domain = 'default' ) {
-        $translations = $this->get_translations_for_domain( $domain );
-        return $translations->translate( $text );
+    function translate($text, $domain = 'default')
+    {
+        $translations = $this->get_translations_for_domain($domain);
+
+        return $translations->translate($text);
     }
 
-    function get_translations_for_domain( $domain ) {
-        if ( !isset( $this->is_loaded[$domain] ) ) {
+    function get_translations_for_domain($domain)
+    {
+        if (!isset($this->is_loaded[$domain])) {
             $this->is_loaded[$domain] = new NOOP();
         }
+
         return $this->is_loaded[$domain];
     }
 }
-
-// END MY_Lang Class
-
-/* End of file MY_Lang.php */
-/* Location: ./application/core/MY_Lang.php */  
