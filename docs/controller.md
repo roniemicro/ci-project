@@ -5,7 +5,7 @@ The bundled MY_Controller has the following functions:
 
 1. Manage Layout
 -----------------
-The now allow you to use layout. There are several way to manage layout.
+The controller now allow you to use layout. There are several way to manage layout.
 
  * Set a protected $_layout = 'your_layout' in your controller to use the layout for your full controller
  * You can customize your layout per action also using $this->set_layout('your_layout') api;
