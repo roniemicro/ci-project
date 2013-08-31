@@ -183,9 +183,12 @@ class Lang extends \CI_Lang {
     function load($langfile = '', $idiom = '', $return = FALSE, $add_suffix = TRUE, $alt_path = '')
     {
         $ret = $this->load_text_domain($langfile, $idiom);
-        //if($ret == false){
+
+        try{
             $ret2 = parent::load($langfile, $idiom, $return, $add_suffix, $alt_path);
-       // }
+        }catch (\Exception $e){
+            $ret2 = false;
+        }
 
         return $ret || $ret2;
     }
