@@ -15,8 +15,8 @@ class Loader extends \CI_Loader {
     public function viewWithLayout($view, $data = null, $return = false)
     {
         $loadedData = array();
-        $loadedData['content'] = parent::view($view,$data,true);
+        $loadedData['content'] = $this->view($view,$data,true);
 
-        return parent::view("layouts/".$this->CI->get_layout(), $loadedData, $return);
+        return $this->view("layouts/".$this->CI->get_layout(), $loadedData, $return);
     }
 }

@@ -9,6 +9,7 @@ class Controller extends \CI_Controller {
     private $_isAjaxRequest = false;
     private $_layout = 'main';
     private $_twig = null;
+    private $_twigPath = null;
 
     function __construct(){
         parent::__construct();
@@ -45,11 +46,15 @@ class Controller extends \CI_Controller {
     public function render($template, $data=array(), $return = false)
     {
         if($this->isTwigTemplate($template)){
-            $output = $this->twig()->render($template, $data);
+            $twig = $this->twig();
+            $data['__FILE__'] = $this->getTwigPath($template);
+            $data['APPPATH'] = realpath(APPPATH );
+            $data['DIRECTORY_SEPARATOR'] = DIRECTORY_SEPARATOR;
+            $output = $twig->render($template, $data);
             if($return){
                 return $output;
             }
-            echo $output;
+            $this->output->append_output($output);
         }else{
             if($this->isAjax()){
                 return $this->load->view($template, $data, $return);
@@ -79,6 +84,11 @@ class Controller extends \CI_Controller {
         return $this->_twig;
     }
 
+    public function getTwigPath($template)
+    {
+        return $this->_twigPath . DIRECTORY_SEPARATOR . $template;
+    }
+
     private function _twigInit()
     {
         if($this->config->item('enable_twig')){
@@ -88,8 +98,15 @@ class Controller extends \CI_Controller {
             }
 
             $templatesPath = APPPATH.'views/'.$twigDirectory;
-            $loader = new \Twig_Loader_Filesystem($templatesPath);
-            $this->_twig = new Loader($loader);
+
+            $this->_twigPath = realpath($templatesPath);
+
+            if(class_exists('\Twig_Loader_Filesystem')){
+                $loader = new \Twig_Loader_Filesystem($templatesPath);
+                $this->_twig = new Loader($loader);
+            }else{
+                show_error('Twig is not installed. Install Twig first by run the command "composer update twig/twig"');
+            }
         }else{
             $this->_twig = new Dummy();
         }

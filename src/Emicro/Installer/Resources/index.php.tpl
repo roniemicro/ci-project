@@ -1,8 +1,5 @@
 <?php
 
-defined('APPLICATION_ENV')
-|| define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -21,7 +18,7 @@ defined('APPLICATION_ENV')
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', APPLICATION_ENV);
+	define('ENVIRONMENT', '{APPLICATION_ENV}');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -203,6 +200,7 @@ if (defined('ENVIRONMENT'))
  * And away we go...
  *
  */
+require_once "../src/Emicro/Helper/common.php";
 require_once "../vendor/autoload.php";
 require_once BASEPATH.'core/CodeIgniter.php';
 

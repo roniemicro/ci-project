@@ -27,6 +27,8 @@ class Loader extends \Twig_Environment
     private function initCustomFunctions()
     {
         $this->addFunction(new \Twig_SimpleFunction('_t', array($this, 'translate')));
+        $this->addFunction(new \Twig_SimpleFunction('nonce', 'nonce'));
+        $this->addFunction(new \Twig_SimpleFunction('valid_nonce', 'valid_nonce'));
     }
 
     private function initCustomFilters()

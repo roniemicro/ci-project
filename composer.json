@@ -61,6 +61,7 @@
     },
     "minimum-stability": "stable",
     "extra": {
+        "localize-ready": true,
         "ci-app-dir": "src/application",
         "ci-package-name": "ellislab/codeigniter",
         "ci-web-dir": "web",

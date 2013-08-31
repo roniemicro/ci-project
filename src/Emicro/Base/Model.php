@@ -120,7 +120,7 @@ class Model extends \CI_Model
      */
     public function getResult($table_name=null)
     {
-        $table=$table_name==null?$this->table:$table_name;
+        $table = $table_name == null ? $this->table : $table_name;
         $query = $this->db->get($table);
         $this->numRows = $query->num_rows();
 
@@ -371,8 +371,7 @@ class Model extends \CI_Model
         if (method_exists($this, $getter))
             return $this->$getter();
         elseif (isset($this->$name))
-            return $this->$name;
-        elseif(isset($this->CI->$name)){
+            return $this->$name; elseif (isset($this->CI->$name)) {
             return $this->CI->$name;
         }
 
@@ -461,11 +460,11 @@ class Model extends \CI_Model
      * The param can be string just like default order_by function expect
      * or can be array with set of param!!
      * <pre>
-     * $model->orderby('fieldname DESC');
+     * $model->order_by('fieldname DESC');
      * or
-     * $model->orderby(array('fieldname','DESC'));
+     * $model->order_by(array('fieldname','DESC'));
      * or
-     * $model->orderby(array(array('fieldname','DESC'),'fieldname DESC'));
+     * $model->order_by(array(array('fieldname','DESC'),'fieldname DESC'));
      * </pre>
      *
      * @param mixed(string|array) $orders
