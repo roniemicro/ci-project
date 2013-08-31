@@ -19,7 +19,7 @@ http://getcomposer.org/ or just run the following command:
 
     curl -s http://getcomposer.org/installer | php
 
-Then, use the `install` command to download all dependencies along with codeigniter framework:
+If you want some [customization](./docs/customization.md), first make it in the composer.json file. Then, use the `install` command to download all dependencies along with codeigniter framework.
 
     php composer.phar install
 

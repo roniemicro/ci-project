@@ -72,7 +72,7 @@
     <code><?PHP echo realpath(APPPATH . "/controllers/welcome.php") ?></code>
 
     <p><?php __t('If you are exploring CodeIgniter for the very first time, you should start by reading the', 'site'); ?>
-        <a href="http://ellislab.com/codeigniter/user-guide/‎">User Guide</a>.</p>
+        <a href="http://ellislab.com/codeigniter/user-guide/">User Guide</a>.</p>
 </div>
 
 <p class="footer"><?php __t('Page rendered in', 'site'); ?> <strong>{elapsed_time}</strong>

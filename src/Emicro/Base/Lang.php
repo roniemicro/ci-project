@@ -21,7 +21,7 @@ class Lang extends \CI_Lang {
     protected $uri;
     protected $lang_code;
 
-    private $default_domain= 'site';
+    protected $default_domain= 'site';
 
     /**************************************************/
 
