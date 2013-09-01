@@ -141,7 +141,10 @@ class Manager
             if ($writeBootstrap) {
                 $data = file_get_contents($bootstrap);
                 preg_match("/define\('ENVIRONMENT',(\s)*'([a-z]+)'\);/", $data, $matches);
-                self::$environment = $matches[2];
+
+                if(isset($matches[2])){
+                    self::$environment = $matches[2];
+                }
             }
         } else {
             $writeBootstrap = TRUE;
