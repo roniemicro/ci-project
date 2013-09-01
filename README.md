@@ -81,7 +81,7 @@ It comes pre-configured with the following libraries:
 
   * [MY_Model][3] An extension of CodeIgniter's base Model class
 
-  * Enhanced Controller Library
+  * Enhanced Controller(./docs/controller.md) Library
 
   * Enhanced Loader Library(For support twig template engine  and basic layout)
 
