@@ -60,9 +60,15 @@ class Colors
         'lightgray'  => 'white'
     );
 
+    private static $hasColorSupport = null;
+
     // Returns colored string
     public static function getColoredString($string, $foreground_color = NULL, $background_color = NULL)
     {
+        if(!self::hasColorSupport()){
+            return $string;
+        }
+
         $colored_string = "";
 
         // Check if given foreground color found
@@ -155,6 +161,32 @@ class Colors
             E_USER_NOTICE);
 
         return NULL;
+    }
+
+    /**
+     * Returns true if the stream supports colorization.
+     *
+     * Colorization is disabled if not supported by the stream:
+     *
+     *  -  windows without ansicon and ConEmu
+     *  -  non tty consoles
+     *
+     * @return Boolean true if the stream supports colorization, false otherwise
+     */
+    private static function hasColorSupport()
+    {
+        if(null !== self::$hasColorSupport){
+            return self::$hasColorSupport;
+        }
+
+        // @codeCoverageIgnoreStart
+        if (DIRECTORY_SEPARATOR == '\\') {
+            self::$hasColorSupport = FALSE !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI');
+            return self::$hasColorSupport;
+        }
+
+        return function_exists('posix_isatty') && @posix_isatty(STDOUT);
+        // @codeCoverageIgnoreEnd
     }
 
 }

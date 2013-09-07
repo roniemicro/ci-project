@@ -16,9 +16,7 @@ class DatabaseConfig
         'hostname'=>'The hostname of your database server',
         'username'=>'The username used to connect to the database server',
         'password'=>'The password used to connect to the database server',
-        'database'=>'The name of the database you want to connect to',
-        'dbdriver'=>'The database type (mysql/mysqli/postgre/odbc/mssql/sqlite/oci8)',
-        'dbprefix'=>'The table prefix'
+        'database'=>'The name of the database you want to connect to'
     );
 
 
