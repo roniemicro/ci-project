@@ -30,7 +30,6 @@ Composer will install Codeigniter2 and all its dependencies under the working di
 --------------------------------
 
 Congratulations! You're now ready to use Codeigniter2.
-Create the database and import the tables with the basic.sql & data.sql file in schema directory of ezRbac Library
 
 Edit the files with your preferences (domain, languages, database, authentification):
 
