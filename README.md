@@ -12,7 +12,7 @@ using Codeigniter2.
 
 ### Use Composer
 
-Download or Clone this project first. Go to downloaded directory.
+[Download](https://github.com/roniemicro/ci-project/archive/v1.0.zip) or Clone this project first. Go to downloaded directory.
 
 If you don't have [Composer][1] yet, download it following the instructions on
 http://getcomposer.org/ or just run the following command:
