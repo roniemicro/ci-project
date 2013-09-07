@@ -88,7 +88,7 @@ class DatabaseConfig
                     $message = Colors::message("%s ").Colors::info('"%s"').Colors::message(" File");
 
                     if(empty($current_config)){
-                        $typeStr = "Generating";
+                        $typeStr = "Writting";
                         $message2 = Colors::info("Enter Database Configuration options :");
                     }else{
                         $typeStr = "Updating";
@@ -102,13 +102,7 @@ class DatabaseConfig
 
                 $default_value = $config == "~" || $config == "" ? 'null' : $config;
 
-                if(isset(self::$configurableDatabaseOptions[$key])){
-                    $question = sprintf('Enter %s [%s] :',
-                                              Colors::highlight(self::$configurableDatabaseOptions[$key]),
-                                              Colors::info($default_value));
-                }else{
-                    $question = sprintf('Enter value for "%s" [%s] :', Colors::highlight($key), Colors::info($default_value));
-                }
+                $question = sprintf('Enter value for "%s" [%s] :', Colors::highlight($key), Colors::info($default_value));
 
                 $data = $io->ask($question, $config);
 

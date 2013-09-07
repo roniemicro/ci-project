@@ -36,15 +36,16 @@ class CoreLibrary {
 
         $writeRoute = TRUE;
 
+        $io = $event->getIO();
+
         if(!$newCopy){
             $writeMode = "Updating";
             if (file_exists($routeDest)) {
-                $io = $event->getIO();
                 $confirmMsg     = Colors::confirm("Re-Write Route Configuration File(yes,no)?[no]") . " :";
                 $writeRoute = $io->askConfirmation($confirmMsg, FALSE);
             }
         }else{
-            $writeMode = "Writing";
+            $writeMode = PHP_EOL."Writing";
         }
 
         if ($writeRoute) {
