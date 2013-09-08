@@ -7,7 +7,7 @@ use Emicro\Twig\Loader;
 class Controller extends \CI_Controller {
 
     private $_isAjaxRequest = false;
-    protected $_layout = 'main2';
+    protected $_layout = 'main';
     private $_twig = null;
     private $_twigPath = null;
 
