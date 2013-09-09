@@ -5,15 +5,22 @@ class Welcome extends MY_Controller {
 
 	public function access_map(){
         return array(
-            'index'=>'view'
+            'index'=>'view',
+            'greeting'=>'view'
         );
     }
 
     public function index()
 	{
+        //Auto detect template: welcome/index.twig or welcome/index.php
+        $this->render(array('title'=>'Welcome to Codeigniter!'));
+	}
+
+    public function greeting()
+    {
         //$this->render('welcome.html.twig');
         $this->render('welcome_message', array('title'=>'Welcome to Codeigniter!'));
-	}
+    }
 }
 
 /* End of file welcome.php */

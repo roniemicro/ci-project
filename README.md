@@ -12,7 +12,7 @@ using Codeigniter2.
 
 ### Use Composer
 
-[Download](https://github.com/roniemicro/ci-project/archive/v1.0.zip) or Clone this project first. Go to downloaded directory.
+[Download](https://github.com/roniemicro/ci-project/archive/v1.1.zip) and extract or Clone this project first. Go to downloaded directory.
 
 If you don't have [Composer][1] yet, download it following the instructions on
 http://getcomposer.org/ or just run the following command:
@@ -31,7 +31,7 @@ Composer will install Codeigniter2 and all its dependencies under the working di
 
 Congratulations! You're now ready to use Codeigniter2.
 
-Edit the files with your preferences (domain, languages, database, authentification):
+Edit the files with your preferences (domain, languages, database, authentication):
 
 - config.php
 - database.php
@@ -85,6 +85,8 @@ It comes pre-configured with the following libraries:
   * Enhanced Loader Library(For support twig template engine  and basic layout)
 
   * Enhanced Language Library(gettext localization implementation)
+
+  * JS/CSS Minifier. you can use (assets/css/mini.php?files=file1,file2) and (assets/js/mini.php?files=file1,file2)
 
 
 Enjoy!
