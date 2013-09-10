@@ -38,7 +38,6 @@ Edit the files with your preferences (domain, languages, database, authenticatio
 - thirdparty/ezRbac/config/ez_rbac.php.php
 
 Create a virtualhost setting the document root pointing to /path/of/web directory
-If you want more languages, create more ServerAlias
 
 	<VirtualHost *:80>
 		ServerName mydomain.com
