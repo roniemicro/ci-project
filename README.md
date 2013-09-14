@@ -1,6 +1,22 @@
 Codeigniter Enhanced Edition!
 =============================
 
+.
+
+.
+
+***
+***
+**I am not maintining this project anymore.** You can try [Codeigniter Extended](https://github.com/xiidea/codeIgniter-extended) which has the same functionality with some extended feature. More features are comming soon...
+***
+***
+
+.
+
+
+.
+
+
 Welcome to the Codeigniter Enhanced Edition - a fully-functional Codeigniter2
 application that you can use as the skeleton for your new applications.
 
